@@ -14,5 +14,14 @@ installers
 scripts
 steam-data
 
+daemon/start.sh
+daemon/stop.sh
+daemon/start.bat
+daemon/stop.bat
+daemon/dist
+daemon/build
+daemon/initial_config.bin
+daemon/main.spec
+
 !examples/*
 __pycache__
