@@ -26,6 +26,6 @@ for host in os.listdir("./data"):
         for mode in os.listdir("./data/" + host + "/" + file_type):
             autogen_json |= parse_types(host, mode, file_type)
 
-parse_roms()
+autogen_json |= parse_roms()
 
 write_json("./generators/out/autogen.json", autogen_json)
