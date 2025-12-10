@@ -245,8 +245,19 @@ def launch_program(selected_item):
         emulator_exec = emulator_exec.replace("{rom_path}", asset)
         subprocess.run([emulator_exec], shell=True)
     elif "asset" in selected_item:
-        send_start(selected_item["ip"])
-        send_asset(selected_item["ip"], selected_item["asset"], selected_item["os"])
+        start_thread = multiprocessing.Process(
+            target=send_start, args=(selected_item["ip"],)
+        )
+        start_thread.start()
+        asset_thread = multiprocessing.Process(
+            target=send_asset,
+            args=(
+                selected_item["ip"],
+                selected_item["asset"],
+                selected_item["os"],
+            ),
+        )
+        asset_thread.start()
         remote_config = read_json("./config/remote.json")
         remote_type = selected_item["remote_client_type"]
         if remote_type == "moonlight":
