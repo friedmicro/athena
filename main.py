@@ -4,12 +4,15 @@ import datetime
 import json
 import multiprocessing
 import os
+import socket
 import subprocess
 import sys
 import time
 from functools import partial
 
-from scanners.lib.config import read_json
+from cryptography.fernet import Fernet
+
+from scanners.lib.config import read_json, read_text
 
 
 def render_table(app_data, stdscr):
@@ -142,6 +145,49 @@ def time_counter_loop(args):
             subprocess.call(final_warning_hook, shell=True)
 
 
+def send_daemon_message(host, message_request):
+    PORT = 65432
+
+    with open("initial_config.bin", "rb") as file_object:
+        encrypt_pass = file_object.read()
+
+    crypto_key = Fernet(encrypt_pass)
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((host, PORT))
+        message_body = json.dumps(message_request).encode()
+        encrypted_message = crypto_key.encrypt(message_body)
+        s.sendall(encrypted_message)
+        data = s.recv(1024)
+        print(f"Received from server: {data.decode('utf-8')}")
+        s.close()
+
+
+def send_stop(host):
+    send_daemon_message(host, {"operation": "stop", "params": ""})
+
+
+def send_start(host):
+    send_daemon_message(host, {"operation": "start", "params": ""})
+
+
+def send_asset(host, asset_path, remote_os):
+    asset_contents = read_text(asset_path)
+    game_name = "game"
+    if remote_os == "linux":
+        game_name += ".sh"
+    elif remote_os == "windows":
+        game_name += ".bat"
+    message_request = {
+        "operation": "asset",
+        "params": {
+            "path": "$home$/" + game_name,
+            "contents": asset_contents,
+            "is_executable": True,
+        },
+    }
+    send_daemon_message(host, message_request)
+
+
 def execute_program_with_time_logging(selected_item):
     time_saver_trigger = time_configuration["time_saver_trigger"]
 
@@ -199,6 +245,8 @@ def launch_program(selected_item):
         emulator_exec = emulator_exec.replace("{rom_path}", asset)
         subprocess.run([emulator_exec], shell=True)
     elif "asset" in selected_item:
+        send_start(selected_item["ip"])
+        send_asset(selected_item["ip"], selected_item["asset"], selected_item["os"])
         remote_config = read_json("./config/remote.json")
         remote_type = selected_item["remote_client_type"]
         if remote_type == "moonlight":
@@ -210,12 +258,12 @@ def launch_program(selected_item):
                 + selected_item["moonlight_app"]
             )
             subprocess.run([moonlight_command], shell=True)
+        send_stop(selected_item["ip"])
 
 
 def setup_and_launch(is_logging_time, selected_item):
     if "start_script" in selected_item and selected_item["start_script"] != "":
         subprocess.run([selected_item["start_script"]], shell=True)
-        pass
     if is_logging_time:
         execute_program_with_time_logging(selected_item)
     else:

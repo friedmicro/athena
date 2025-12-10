@@ -12,4 +12,5 @@ def form_remote_props(output_json, name, host):
     output_json[name]["moonlight_app"] = remote_config[host]["moonlight_app"]
     output_json[name]["moonlight_machine"] = remote_config[host]["moonlight_machine"]
     output_json[name]["remote_client_type"] = remote_config[host]["remote_client_type"]
+    output_json[name]["os"] = remote_config[host]["os"]
     return output_json
