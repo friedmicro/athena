@@ -15,7 +15,7 @@ open_steam_direct = windows_games["open_steam_direct"]
 def steam_template(program_name, url_destination):
     steam_path = windows_games["steam_path"]
     if program_name in open_steam_direct:
-        return windows_games["steam_path"]
+        return f'"{windows_games["steam_path"]}"'
     return f"""\"{steam_path}\" {url_destination}
 """.format(steam_path=steam_path, url_destination=url_destination)
 
