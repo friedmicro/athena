@@ -31,6 +31,10 @@ for combination in combined_files:
             tmp_json[item["name"]]["time_limit"] = not combined_files[combination][
                 "time_limit"
             ]
+        if item["name"] in combined_files[combination]["time_exceptions_schedule"]:
+            tmp_json[item["name"]]["time_schedule"] = combined_files[combination][
+                "time_exceptions_schedule"
+            ][item["name"]]
         del tmp_json[item["name"]]["name"]
 
     with open(combination, "w") as outfile:

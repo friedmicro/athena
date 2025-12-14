@@ -7,7 +7,7 @@ import time
 
 from launcher.daemon_comm import send_asset, send_start, send_stop
 from launcher.lib.config import read_json, write_json
-from launcher.time_keep import time_counter_loop
+from launcher.time_keep import is_item_time_whitelisted, time_counter_loop
 
 time_configuration = read_json("time_config.json")
 time_ledger = read_json("time.json")
@@ -115,7 +115,10 @@ def setup_and_launch(is_logging_time, selected_item):
     if "start_script" in selected_item and selected_item["start_script"] != "":
         subprocess.run([selected_item["start_script"]], shell=True)
     if is_logging_time:
-        execute_program_with_time_logging(selected_item)
+        if is_item_time_whitelisted(selected_item):
+            launch_program(selected_item)
+        else:
+            execute_program_with_time_logging(selected_item)
     else:
         launch_program(selected_item)
     if "stop_script" in selected_item and selected_item["stop_script"] != "":

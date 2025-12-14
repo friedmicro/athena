@@ -10,6 +10,25 @@ from launcher.lib.config import read_json
 time_configuration = read_json("time_config.json")
 
 
+def is_item_time_whitelisted(selected_item):
+    now = datetime.datetime.now()
+    schedule = selected_item["time_schedule"]
+    schedule_day = schedule["day"]
+    schedule_start_hour = schedule["start_time"].split(":")[0]
+    schedule_start_minute = schedule["start_time"].split(":")[1]
+    schedule_end_hour = schedule["end_time"].split(":")[0]
+    schedule_end_minute = schedule["end_time"].split(":")[1]
+    if schedule_day == now.strftime("%A"):
+        if schedule_start_hour <= now.hour and schedule_end_hour >= now.hour:
+            if (
+                schedule_start_minute <= now.minute
+                and schedule_end_minute >= now.minute
+            ):
+                return True
+
+    return False
+
+
 def validate_whitelisted_days():
     no_time_to_play = time_configuration["no_time_to_play"]
     today = datetime.datetime.today()
