@@ -1,26 +1,5 @@
-import json
-import socket
-
-from cryptography.fernet import Fernet
-
+from daemon.lib.comm import send_daemon_message
 from launcher.lib.config import read_text
-
-
-def send_daemon_message(host, message_request, timeout=None):
-    PORT = 65432
-
-    with open("initial_config.bin", "rb") as file_object:
-        encrypt_pass = file_object.read()
-
-    crypto_key = Fernet(encrypt_pass)
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-        s.connect((host, PORT))
-        s.settimeout(timeout)
-        message_body = json.dumps(message_request).encode()
-        encrypted_message = crypto_key.encrypt(message_body)
-        s.sendall(encrypted_message)
-        print("Sent to request to server")
-        s.close()
 
 
 def send_stop(host):

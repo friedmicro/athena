@@ -1,0 +1,1 @@
+../../generators/types/lib/config.py

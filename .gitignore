@@ -2,6 +2,7 @@
 *.sh
 *.txt
 *.wav
+*.zip
 # Limitation of git, only include the lib directory and a few other files in generator
 generators/*
 !generators/combine_partials.py
