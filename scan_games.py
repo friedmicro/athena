@@ -12,6 +12,7 @@ from scanners.lib.config import read_json, write_json
 from scanners.lnk import parse_lnk
 from scanners.manual_remote import generate_manual
 from scanners.steam import parse_acf
+from scanners.waydroid import generate_waydroid
 from scanners.web import generate_web_pages
 
 
@@ -78,5 +79,6 @@ for host in os.listdir("./data"):
 
 autogen_json |= parse_roms()
 autogen_json |= generate_web_pages()
+autogen_json |= generate_waydroid()
 
 write_json("./generators/out/autogen.json", autogen_json)

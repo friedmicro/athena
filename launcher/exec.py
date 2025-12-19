@@ -67,6 +67,11 @@ def launch_program(selected_item):
         asset = selected_item["asset"]
         emulator_exec = emulator_exec.replace("{rom_path}", asset)
         subprocess.run([emulator_exec], shell=True)
+    elif "layer" in selected_item:
+        if selected_item["layer"] == "waydroid":
+            subprocess.run(
+                ["waydroid app launch " + selected_item["asset"] + " &"], shell=True
+            )
     elif "web" in selected_item:
         web_config = read_json("./config/web.json")
         os_in_use = platform.system().lower()
