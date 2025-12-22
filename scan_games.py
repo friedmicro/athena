@@ -68,6 +68,11 @@ for host in remote_config["remotes_to_load"]:
         target_path = "./data/" + host
         shutil.rmtree(target_path)
         zip.extractall(target_path)
+    if "manual" in remote_config[host]:
+        manual_config = remote_config[host]["manual"]
+        manual_path = "./data/" + host + "/manual"
+        os.mkdir(manual_path)
+        write_json(manual_path + "/config.json", manual_config)
     if "stop_script" in remote_config[host]:
         subprocess.run([remote_config[host]["stop_script"]])
 
