@@ -5,13 +5,14 @@ import shutil
 import subprocess
 import zipfile
 
-from lib.os import mkdirp
-from lib.config import write_json
 from config_lib.remote import RemoteConfig
 from config_lib.steam import SteamConfig
 from daemon.lib.comm import request_from_daemon
 from daemon.lib.scanner import find_steam_acf_files
 from launcher.launch_preferences import merge_based_on_props
+from lib.accessibility import generate_accessible_file
+from lib.config import write_json
+from lib.os import mkdirp
 from scanners.emulators import parse_roms
 from scanners.lnk import parse_lnk
 from scanners.manual import generate_manual_local, generate_manual_remote
@@ -91,5 +92,7 @@ autogen_json |= generate_manual_local()
 autogen_json |= parse_roms()
 autogen_json |= generate_web_pages()
 autogen_json |= generate_waydroid()
+
+autogen_json = generate_accessible_file(autogen_json)
 
 write_json("./generators/out/autogen.json", autogen_json)
