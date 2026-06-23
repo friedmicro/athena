@@ -1,5 +1,6 @@
 import json
 import os
+import platform
 
 
 def read_text(file_name):
@@ -53,3 +54,11 @@ def write_json(path, data, client_write=False):
             os.mkdir(client_directory)
     with open(path, "w") as outfile:
         outfile.write(json.dumps(data, indent=4))
+
+
+def get_config_path():
+    os_in_use = platform.system()
+    if os_in_use == "Windows":
+        return os.path.join(os.environ["APPDATA"], "athena")
+    else:
+        return os.path.join(os.path.expanduser("~"), ".config", "athena")
