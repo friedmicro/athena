@@ -1,4 +1,5 @@
 import datetime
+import math
 import multiprocessing
 import os
 import platform
@@ -38,7 +39,11 @@ def execute_program_with_time_logging(selected_item):
                 time_record
             )
 
-        print(current_time_total)
+        minutes = math.floor(current_time_total / 60)
+        display_minutes = minutes % 60
+        seconds = current_time_total - (minutes * 60)
+        hours = math.floor(minutes / 60)
+        print(str(hours) + ":" + str(display_minutes) + ":" + str(seconds))
 
         if current_time_total >= time_configuration["first_warning_time"]:
             print(time_configuration["time_limit_reached"])
