@@ -8,7 +8,7 @@ from config_lib.client import GeneratorConfig
 from config_lib.install import InstallConfig, create_initial_configs
 from daemon.lib.comm import auth
 from launcher.exec import setup_and_launch
-from launcher.time_keep import validate_whitelisted_days
+from launcher.time_keep import athena_check, validate_whitelisted_days
 from lib.config import read_json
 from remote.manage import force_stop_remote, remove_tracking
 
@@ -76,6 +76,7 @@ def process_user_input():
         program_to_call = sys.argv[1]
         start_program(program_to_call)
 
-
-create_initial_configs(InstallConfig())
-process_user_input()
+if __name__ == '__main__':
+    athena_check()
+    create_initial_configs(InstallConfig())
+    process_user_input()

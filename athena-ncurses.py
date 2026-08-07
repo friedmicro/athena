@@ -7,7 +7,7 @@ from functools import partial
 from lib.config import read_json
 from launcher.exec import setup_and_launch
 from launcher.filter import clear_out_of_scope
-from launcher.time_keep import validate_whitelisted_days
+from launcher.time_keep import athena_check, validate_whitelisted_days
 from config_lib.install import create_initial_configs, InstallConfig
 
 
@@ -114,33 +114,35 @@ def main(app_data, stdscr):
         if app_data["should_exit"]:
             break
 
+if __name__ == '__main__':
+    athena_check()
 
-create_initial_configs(InstallConfig())
+    create_initial_configs(InstallConfig())
 
-menu_topology = read_json("config.json")
-menu_topology = clear_out_of_scope(menu_topology)
+    menu_topology = read_json("config.json")
+    menu_topology = clear_out_of_scope(menu_topology)
 
-app_data = {
-    "page": 0,
-    "row_line": 0,
-    "should_exit": False,
-    "row_count": len(menu_topology),
-    "menu_topology": menu_topology,
-    "prior_menu_topology": menu_topology,
-}
+    app_data = {
+        "page": 0,
+        "row_line": 0,
+        "should_exit": False,
+        "row_count": len(menu_topology),
+        "menu_topology": menu_topology,
+        "prior_menu_topology": menu_topology,
+    }
 
-# Some terminals set a very high delay for escape, overwrite this
-os.environ.setdefault("ESCDELAY", str(5))
-# Open the ncurses interface and selection
-# appdata menu_topology key will mutate for a command to run
-curses.wrapper(partial(main, app_data))
-# If we should not launching a program with a time restriction exit the program
-is_logging_time = False
-if "time_limit" in app_data["menu_topology"]:
-    if app_data["menu_topology"]["time_limit"] == True:
-        # We assume the time_config.json file is present if you are doing time options
-        # Seeing as otherwise it will crash\not do anything
-        validate_whitelisted_days()
-        is_logging_time = True
-selected_item = app_data["menu_topology"]
-setup_and_launch(is_logging_time, selected_item)
+    # Some terminals set a very high delay for escape, overwrite this
+    os.environ.setdefault("ESCDELAY", str(5))
+    # Open the ncurses interface and selection
+    # appdata menu_topology key will mutate for a command to run
+    curses.wrapper(partial(main, app_data))
+    # If we should not launching a program with a time restriction exit the program
+    is_logging_time = False
+    if "time_limit" in app_data["menu_topology"]:
+        if app_data["menu_topology"]["time_limit"] == True:
+            # We assume the time_config.json file is present if you are doing time options
+            # Seeing as otherwise it will crash\not do anything
+            validate_whitelisted_days()
+            is_logging_time = True
+    selected_item = app_data["menu_topology"]
+    setup_and_launch(is_logging_time, selected_item)

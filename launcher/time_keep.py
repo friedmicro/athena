@@ -4,11 +4,25 @@ import os
 import subprocess
 import sys
 import time
+import requests
 
 from lib.config import read_json
 
 time_configuration = read_json("./config/time_config.json")
 
+# A deadlock check intended to stop the user from opening Athena at all
+# intended for lockouts while working on things...requires external server matching API
+# effectively just an API which returns break_met true or false is all that's needed
+def athena_check():
+    response = requests.get(time_configuration["time_tracker_url"])
+    if response.status_code == 200:
+        data = response.json()
+        if not data["break_met"]:
+            print("You still have a bit of work to do today")
+            sys.exit(42)
+    else:
+        print("Print timekeeper returned error")
+        sys.exit(42)
 
 def is_item_time_whitelisted(selected_item):
     now = datetime.datetime.now()

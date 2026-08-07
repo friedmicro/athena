@@ -14,5 +14,8 @@
   "first_warning_hook": "./warn.sh",
   "final_warning_time": 14400,
   "final_warning_hook": "./final.sh",
-  "time_saver_trigger": "/tmp/.ci_time_saver"
+  "time_saver_trigger": "/tmp/.ci_time_saver",
+  "time_tracker_url": "",
+  "time_per_day": 0,
+  "time_per_week": 0
 }
