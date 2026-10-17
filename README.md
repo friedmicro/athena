@@ -1,5 +1,5 @@
 # athena
-There's a lot more information on Athena on my website with respect to the writeup on what this program is. http://git.friedmicro-lab.org/Homelab_Infra_Public/arch-upstream-recompile
+There's a lot more information on Athena on my website with respect to the writeup on what this program is. https://luciaesmith.com/Athena.html
 
 If you want a bit of history on what this is the bulk of the writeup is on there. But a short summary here.
 
