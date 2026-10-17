@@ -23,6 +23,19 @@ There's a lot of supported areas\features, but a short list:
 * Remote daemon support (running scripts on the remote or scanning for applications) on: Mac, Linux, and Windows
 * Plain script overrides for unsupported features
 
+## Build\Run
+The makefile is mostly for distributing binaries\keeping dependencies simple. Would advise not using it if you're cloning the source anyways.
+
+Just about every library used in this projects is either standard python library or included with most Linux distros.
+
+Setup the configs based upon the examples in config/defaults.json.
+
+To run this components:
+* python athena-cli.py: for the cli
+* python athena-client-daemon: for the remote state daemon
+* python athena-ncurses.py: for the ncurses interface
+* python athena-api.py: for the rest API
+
 ## Why
 The simple version is when this was written there really wasn't a lot of good tooling for controling a remote system and I got tired of the tedium of jumping between applications\operating systems manually. The additional friction greatly reduced my enjoyment and I couldn't easily move away from application streaming due to my more powerful compute system needing to be in a different room for VR just due to space. So I opted to write some code to streamline this process and make it a much more enjoyable experience to use. This is an application that gets use by me multiple times a week.
 
