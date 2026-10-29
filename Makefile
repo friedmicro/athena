@@ -9,13 +9,13 @@ build: clean
 	mv dist/athena/athena-cli dist/athena/athena
 	mv dist/scan_games dist/scanner
 	mv dist/scanner/scan_games dist/scanner/scanner
-	cp -r dist/ desktop-gui/tools
-	rm -rf desktop-gui/tools/athena-ncurses
-	rm -rf desktop-gui/tools/athena-client-daemon
-	rm -rf desktop-gui/tools/athena-daemon
-	cd desktop-gui
-	npm run make
-	npm run package
+	# cp -r dist/ desktop-gui/tools
+	# rm -rf desktop-gui/tools/athena-ncurses
+	# rm -rf desktop-gui/tools/athena-client-daemon
+	# rm -rf desktop-gui/tools/athena-daemon
+	# cd desktop-gui
+	# npm run make
+	# npm run package
 	cd ..
 
 dev-ncurses:
@@ -90,10 +90,7 @@ virtual-env:
 	pyenv virtualenv 3.13.7 athena
 
 deps:
-	pip install pyinstaller
-	pip install cryptography
-	pip install LnkParse3
-	pip install flask
+	pip install -r requirements.txt
 	cd desktop-gui
 	npm install
 	cd ..

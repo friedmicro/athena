@@ -16,18 +16,18 @@ class WindowsGamesConfig:
 
     def update_exclude(self, exclude):
         self.config["exclude"] = exclude
-        write_json(self.config, self.manual_config_path, self.is_client)
+        write_json(self.manual_config_path, self.config, self.is_client)
 
     def fetch_open_steam_direct(self):
         return self.config["open_steam_direct"]
 
     def update_open_steam_direct(self, open_steam_direct):
         self.config["open_steam_direct"] = open_steam_direct
-        write_json(self.config, self.manual_config_path, self.is_client)
+        write_json(self.manual_config_path, self.config, self.is_client)
 
     def fetch_steam_path(self):
         return self.config["steam_path"]
 
     def update_steam_path(self, steam_path):
         self.config["steam_path"] = steam_path
-        write_json(self.config, self.manual_config_path, self.is_client)
+        write_json(self.manual_config_path, self.config, self.is_client)

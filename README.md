@@ -35,6 +35,7 @@ To run this components:
 * python athena-client-daemon: for the remote state daemon
 * python athena-ncurses.py: for the ncurses interface
 * python athena-api.py: for the rest API
+* python athena-gui.py: for a fairly simple GUI
 
 ## Why
 The simple version is when this was written there really wasn't a lot of good tooling for controling a remote system and I got tired of the tedium of jumping between applications\operating systems manually. The additional friction greatly reduced my enjoyment and I couldn't easily move away from application streaming due to my more powerful compute system needing to be in a different room for VR just due to space. So I opted to write some code to streamline this process and make it a much more enjoyable experience to use. This is an application that gets use by me multiple times a week.

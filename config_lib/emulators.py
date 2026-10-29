@@ -72,6 +72,7 @@ class EmulatorConfig:
         self.write_config()
 
     def add_emulator(self, name):
+        self.config_data["registered_emulators"].append(name)
         self.emulators[name] = {
             "paths": [],
             "scan": [],
