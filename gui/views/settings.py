@@ -175,10 +175,6 @@ class SettingsView(BaseView):
             text=text, text_color="#4CAF50" if ok else "#E53935"
         )
 
-    # ------------------------------------------------------------------
-    # Actions
-    # ------------------------------------------------------------------
-
     def _view_config_json(self):
         if not os.path.exists(CONFIG_JSON_PATH):
             self._set_toolbar_status("config.json not found", ok=False)
@@ -247,7 +243,6 @@ class SettingsView(BaseView):
             write_client_file(client_id, filename, data)
             dialog.destroy()
             self._set_toolbar_status("Copied " + filename + " to " + client_id)
-            # Refresh client list in case a new folder appeared.
             self.targets = ["Base Config"] + list_client_ids()
             self.target_menu.configure(values=self.targets)
 

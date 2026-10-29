@@ -24,7 +24,6 @@ class EmulatorsPanel(BasePanel):
         self.config = EmulatorConfig(self.is_client)
         emulators = sorted(self.config.fetch_emulators().keys())
 
-        # Name entry for adding a new emulator.
         add_row = ctk.CTkFrame(self.body, fg_color="transparent")
         add_row.pack(fill="x", pady=4)
         self.new_name_var = ctk.StringVar(value="")
@@ -60,8 +59,6 @@ class EmulatorsPanel(BasePanel):
             self._render_emulator()
 
         self.add_save_button(save)
-
-    # ------------------------------------------------------------------
 
     def _add_emulator(self):
         name = self.new_name_var.get().strip()

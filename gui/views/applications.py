@@ -57,8 +57,6 @@ class ApplicationsView(BaseView):
         self.selected_name = None
         self.refresh()
 
-    # ------------------------------------------------------------------
-
     def refresh(self):
         self.programs = load_programs()
         for child in self.listbox.winfo_children():

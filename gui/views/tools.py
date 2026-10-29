@@ -38,15 +38,10 @@ class ToolsView(BaseView):
         threading.Thread(target=self._generate_worker, daemon=True).start()
 
     def _generator_command(self):
-        """Return the command to run to generate the config.
-
-        Prefer the configured generator binary; fall back to running
-        ``generator.py`` directly when the binary hasn't been built yet.
-        """
         try:
             generator_config = GeneratorConfig()
             binary = generator_config.generator_path
-        except Exception:  # noqa: BLE001
+        except Exception:
             binary = None
 
         if binary and os.path.exists(binary):

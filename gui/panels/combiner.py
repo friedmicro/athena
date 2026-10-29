@@ -37,8 +37,6 @@ class CombinerPanel(BasePanel):
         if self.selected_file is not None:
             self._render_form()
 
-    # ------------------------------------------------------------------
-
     def _add_file(self):
         name = self.new_file_var.get().strip()
         if not name:

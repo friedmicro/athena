@@ -44,8 +44,6 @@ class SteamPanel(BasePanel):
 
         self.add_save_button(save)
 
-    # ------------------------------------------------------------------
-
     def _on_select_host(self, host):
         self.selected_host = host
         self._render_host()

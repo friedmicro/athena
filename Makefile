@@ -9,13 +9,6 @@ build: clean
 	mv dist/athena/athena-cli dist/athena/athena
 	mv dist/scan_games dist/scanner
 	mv dist/scanner/scan_games dist/scanner/scanner
-	# cp -r dist/ desktop-gui/tools
-	# rm -rf desktop-gui/tools/athena-ncurses
-	# rm -rf desktop-gui/tools/athena-client-daemon
-	# rm -rf desktop-gui/tools/athena-daemon
-	# cd desktop-gui
-	# npm run make
-	# npm run package
 	cd ..
 
 dev-ncurses:
