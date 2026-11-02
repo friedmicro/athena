@@ -45,23 +45,6 @@ dev-api:
 dev-api:
 	pyinstaller athena-api.py
 
-dev-desktop-gui:
-	electron desktop-gui/main.js
-
-dev-npm-desktop-gui:
-	cd desktop-gui
-	npm run start
-
-build-desktop-gui:
-	cp -r dist/ desktop-gui/tools
-	rm -rf desktop-gui/tools/athena-ncurses
-	rm -rf desktop-gui/tools/athena-client-daemon
-	rm -rf desktop-gui/tools/athena-daemon
-	cd desktop-gui
-	npm run make
-	npm run package
-	cd ..
-
 build-test: build
 	./dist/generator/generator
 
@@ -84,9 +67,6 @@ virtual-env:
 
 deps:
 	pip install -r requirements.txt
-	cd desktop-gui
-	npm install
-	cd ..
 
 dep-windows: deps
 	pip install windows-curses
@@ -94,5 +74,3 @@ dep-windows: deps
 clean:
 	rm -rf build
 	rm -rf dist
-	rm -rf desktop-gui/out
-	rm -rf desktop-gui/tools
